@@ -1,61 +1,67 @@
-class Nodo:
+class Nodo: #Se cre una clase Nodo para organizar el arbol
     def __init__(self, dato):
-        # "dato" puede ser de cualquier tipo, incluso un objeto si se sobrescriben los operadores de comparación
         self.dato = dato
-        self.izquierda = None
-        self.derecha = None
+        self.izq = None
+        self.der = None
+
+##################################################################################
 
 
+from nodo import Nodo  #Importamos el la clase nodo para la elaboracion del arbol
 
-
-
-class Arbol:
+class Arbol:   #Definimos una nueva clase Arbol para empezar a aramar el arbol
     def __init__(self, dato):
-        self.raiz = Nodo(dato)
+        self.raiz = Nodo(dato)   #Son los datos que se agregan al nodo
 
     def __agregar_recursivo(self, nodo, dato):
         if dato < nodo.dato:
-            if nodo.izquierda is None:
-                nodo.izquierda = Nodo(dato)
+            if nodo.izq is None:
+                nodo.izq = Nodo(dato)  #Se agregan los datos por la izquierda
             else:
-                self.__agregar_recursivo(nodo.izquierda, dato)
+                self.__agregar_recursivo(nodo.izq, dato)
         else:
-            if nodo.derecha is None:
-                nodo.derecha = Nodo(dato)
+            if nodo.dere is None:
+                nodo.der = Nodo(dato)   #Se agregan los datos por la derecha
             else:
-                self.__agregar_recursivo(nodo.derecha, dato)
+                self.__agregar_recursivo(nodo.der, dato)
 
-    def __inorden_recursivo(self, nodo):
+    def __inorden_recursivo(self, nodo):   #Muestra el arbol en desorden
         if nodo is not None:
-            self.__inorden_recursivo(nodo.izquierda)
+            self.__inorden_recursivo(nodo.izq)  #En el nodo izquierdo
             print(nodo.dato, end=", ")
-            self.__inorden_recursivo(nodo.derecha)
+            self.__inorden_recursivo(nodo.der)  #En el nodo derecho
 
     def __preorden_recursivo(self, nodo):
         if nodo is not None:
             print(nodo.dato, end=", ")
-            self.__preorden_recursivo(nodo.izquierda)
-            self.__preorden_recursivo(nodo.derecha)
+            self.__preorden_recursivo(nodo.izq)
+            self.__preorden_recursivo(nodo.der)
 
     def __postorden_recursivo(self, nodo):
         if nodo is not None:
-            self.__postorden_recursivo(nodo.izquierda)
-            self.__postorden_recursivo(nodo.derecha)
+            self.__postorden_recursivo(nodo.izq)
+            self.__postorden_recursivo(nodo.der)
             print(nodo.dato, end=", ")
 
-    def __buscar(self, nodo, busqueda):
+    def __buscar(self, nodo, busqueda):   #funcion de busqueda de datos
         if nodo is None:
             return None
         if nodo.dato == busqueda:
             return nodo
         if busqueda < nodo.dato:
-            return self.__buscar(nodo.izquierda, busqueda)
+            return self.__buscar(nodo.izq, busqueda) #tanto en el nodo de la derecha como en el de la izquierda
         else:
-            return self.__buscar(nodo.derecha, busqueda)
+            return self.__buscar(nodo.der, busqueda)
 
- 
-    def agregar(self, dato):
+    def agregar(self, dato):    #Aqui podemos agregar los datos que iran en los dos lados de el arbol
         self.__agregar_recursivo(self.raiz, dato)
+
+
+################################################################################
+
+
+######### Imprimimos el arbol en los diferentes ordenes ####################
+
 
     def inorden(self):
         print("Imprimiendo árbol inorden: ")
@@ -74,22 +80,28 @@ class Arbol:
 
     def buscar(self, busqueda):
         return self.__buscar(self.raiz, busqueda)
-    
-arbol = Arbol("Julio")
-arbol.agregar("Stella")
-arbol.agregar("Juan")
-arbol.agregar("Julian")
-arbol.agregar("Alisson")
 
-nombre = input("Buscar nombre ")
-arbol.agregar(nombre)
-arbol.preorden()
+
+################################################################################
+
+from arbol import Arbol # Importamos el arbol para agregar los datos de los familiares
+arbol = Arbol("Rosario")
+arbol.agregar("Julio")
+arbol.agregar("Stella")
+arbol.agregar("Pipe")
+arbol.agregar("Julian")
+arbol.agregar("alisson")
+
+
+
+
+arbol.preorden()   #Se van agregando en los difrentes nombres
 arbol.inorden()
 arbol.postorden()
 # Búsqueda
-busqueda = input("Busca algo en el árbol: ")
+busqueda = input("Busca algo en el árbol: ")    #Buscamos la persona
 nodo = arbol.buscar(busqueda)
-if nodo is None:
+if nodo is None:    #Se compueba si la persona existe o no dentro del el arbol
     print(f"{busqueda} no existe")
 else:
     print(f"{busqueda} sí existe")
